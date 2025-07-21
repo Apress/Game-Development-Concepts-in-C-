@@ -1,0 +1,33 @@
+APlayerCharacter::APlayerCharacter()
+{
+    ProneSpeed = 150.0f; // Prone movement speed
+    bIsProne = false;
+}
+
+void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+    Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+    PlayerInputComponent->BindAction("Prone", IE_Pressed, this, &APlayerCharacter::StartProne);
+    PlayerInputComponent->BindAction("Prone", IE_Released, this, &APlayerCharacter::EndProne);
+}
+
+void APlayerCharacter::StartProne()
+{
+    if (!bIsCrouching && !bIsProne)  // Only go prone if not already crouching or prone
+    {
+        GetCharacterMovement()->MaxWalkSpeed = ProneSpeed;
+        bIsProne = true;
+        // Add prone animations, collision adjustments as needed
+    }
+}
+
+void APlayerCharacter::EndProne()
+{
+    if (bIsProne)
+    {
+        GetCharacterMovement()->MaxWalkSpeed = StandSpeed;
+        bIsProne = false;
+        // Reset animations, collision for standing
+    }
+}

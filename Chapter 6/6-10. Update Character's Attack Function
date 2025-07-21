@@ -1,0 +1,61 @@
+// Define an array to hold combo strings
+TArray<FString> ComboSequence;
+int32 ComboIndex = 0;
+float TimeBetweenAttacks = 0.2f; // Time allowed to execute the next combo move
+float LastAttackTime = 0.0f;
+
+// Player input detection during combat
+void AMyCharacter::HandleAttackInput()
+{
+    if (GetWorld()->GetTimeSeconds() - LastAttackTime <= TimeBetweenAttacks)
+    {
+        // Detect next attack in sequence
+        ComboSequence.Add("Light Attack");
+
+        // Check combo sequence
+        if (ComboSequence[ComboIndex] == "Light Attack")
+        {
+            PerformComboMove(ComboIndex);
+            ComboIndex++;
+        }
+    }
+    else
+    {
+        // Reset combo
+        ComboSequence.Empty();
+        ComboIndex = 0;
+    }
+
+    LastAttackTime = GetWorld()->GetTimeSeconds();
+}
+
+// Perform combo move based on the index
+void AMyCharacter::PerformComboMove(int32 Index)
+{
+    switch (Index)
+    {
+        case 0:
+            // Execute Light Attack animation
+            PlayAnimation(LightAttackAnim);
+            break;
+        case 1:
+            // Execute Heavy Attack animation
+            PlayAnimation(HeavyAttackAnim);
+            break;
+        case 2:
+            // Execute Special Move
+            PlayAnimation(SpecialMoveAnim);
+            break;
+        default:
+            // End combo sequence
+            ResetCombo();
+            break;
+    }  
+}
+
+// Reset combo sequence after final move
+void AMyCharacter::ResetCombo()
+{
+    ComboSequence.Empty();
+    ComboIndex = 0;
+}

@@ -1,0 +1,48 @@
+enum class DamageType {
+    Physical,
+    Fire,
+    Ice,
+    Electric,
+    Poison,
+    Magic,
+    True
+};
+
+class Character {
+public:
+    float Health;
+    float Armor;
+    float FireResistance;
+    float IceResistance;
+    float PoisonResistance;
+
+    // Method to apply damage to character
+    void ApplyDamage(float amount, DamageType damageType) {
+        float finalDamage = amount;
+
+        // Apply resistances based on damage type
+        switch (damageType) {
+            case DamageType::Physical:
+                finalDamage -= Armor; // Armor reduces physical damage
+                break;
+            case DamageType::Fire:
+                finalDamage *= (1.0f - FireResistance); // Fire resistance reduces fire damage
+                break;
+            case DamageType::Ice:
+                finalDamage *= (1.0f - IceResistance); // Ice resistance reduces ice damage
+                break;
+            case DamageType::Poison:
+                finalDamage *= (1.0f - PoisonResistance); // Poison resistance reduces poison damage
+                break;
+            case DamageType::Magic:
+                // No specific resistance for magic in this example
+                break;
+            case DamageType::True:
+                // True damage bypasses all resistances
+                break;
+        }
+
+        // Reduce health by final damage
+        Health -= finalDamage;
+    }
+};

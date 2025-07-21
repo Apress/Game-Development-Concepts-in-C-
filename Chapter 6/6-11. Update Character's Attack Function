@@ -1,0 +1,46 @@
+// Class representing a character's energy meter
+class EnergyMeter {
+public:
+    float CurrentEnergy;
+    float MaxEnergy;
+
+    // Method to charge energy over time
+    void ChargeEnergy(float amount) {
+        CurrentEnergy = FMath::Clamp(CurrentEnergy + amount, 0.0f, MaxEnergy);
+    }
+
+    // Method to check if special move can be executed
+    bool CanExecuteSpecialMove() {
+        return CurrentEnergy >= MaxEnergy;
+    }
+
+    // Execute Special Move
+    void ExecuteSpecialMove() {
+        if (CanExecuteSpecialMove()) {
+            // Perform powerful special move animation
+            PerformSpecialMoveAnimation();
+            CurrentEnergy = 0.0f; // Reset energy after use
+        }
+    }
+};
+
+// Class representing the combat system
+class CombatSystem {
+public:
+    EnergyMeter PlayerEnergy;
+
+    // Method to handle combat progression
+    void HandleCombatProgression() {
+        if (PlayerEnergy.CanExecuteSpecialMove()) {
+            PlayerEnergy.ExecuteSpecialMove();
+            // Trigger finishing move if conditions met (e.g., enemy low health)
+            if (IsEnemyLowHealth()) {
+                 PerformFinishingMoveAnimation();
+            }
+        }
+    }
+    bool IsEnemyLowHealth() {
+        // Check if enemy's health is low for finishing move
+        return Enemy->Health <= 0.1f * Enemy->MaxHealth;
+    }
+};

@@ -1,0 +1,29 @@
+// In your Character's Attack Function
+void AMyCharacter::PerformAttack()
+{
+    // Get the attack range and direction
+    FVector AttackStart = GetActorLocation();
+    FVector AttackEnd = AttackStart + (GetActorForwardVector() * AttackRange);
+
+    // Perform a raycast to check for collision
+    FHitResult HitResult;
+    FCollisionQueryParams CollisionParams;
+    CollisionParams.AddIgnoredActor(this);  // Ignore the character itself
+
+    bool bHit = GetWorld()->LineTraceSingleByChannel(HitResult, AttackStart, AttackEnd, ECC_Visibility, CollisionParams);
+
+    // If something is hit, process the hit
+     if (bHit)
+{
+    AEnemy* HitEnemy = Cast<AEnemy>(HitResult.GetActor());
+    if (HitEnemy)
+    {
+        // Create a generic damage event
+        FDamageEvent DamageEvent;
+ 
+        // Apply damage to the enemy properly
+        HitEnemy->TakeDamage(DamageAmount, DamageEvent, GetInstigatorController(), this);
+    }
+}
+
+}

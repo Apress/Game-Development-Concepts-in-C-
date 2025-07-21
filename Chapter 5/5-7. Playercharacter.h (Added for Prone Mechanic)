@@ -1,0 +1,11 @@
+UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Prone")
+float ProneSpeed;
+
+UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Prone")
+bool bIsProne;
+
+UFUNCTION(BlueprintCallable, Category = "Prone")
+void StartProne();
+
+UFUNCTION(BlueprintCallable, Category = "Prone")
+void EndProne();
