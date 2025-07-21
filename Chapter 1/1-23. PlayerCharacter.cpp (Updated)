@@ -1,0 +1,11 @@
+void APlayerCharacter::EnableRagdoll()
+{
+// Set the collision profile to 'Ragdoll' for the mesh
+GetMesh()->SetCollisionProfileName("Ragdoll");
+
+// Enable physics simulation on all bones below the root
+GetMesh()->SetAllBodiesBelowSimulatePhysics("root", true);
+
+// Optionally, disable character movement once ragdoll is activated
+GetCharacterMovement()->DisableMovement();
+} 

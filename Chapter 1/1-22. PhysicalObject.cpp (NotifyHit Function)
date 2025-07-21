@@ -1,0 +1,55 @@
+void APhysicalObject::NotifyHit(
+    class UPrimitiveComponent* MyComp,
+    AActor* Other,
+    class UPrimitiveComponent* OtherComp,
+    bool bSelfMoved,
+    FVector HitLocation,
+    FVector HitNormal,
+    FVector NormalImpulse,
+    const FHitResult& Hit)
+{
+    // Check if the object is in a state to react to collisions
+    if (bCanReactToCollision) 
+    {
+        // Trigger collision reactions based on custom logic
+        // For example, react to specific objects or types of collisions
+
+        if (Other && Other->IsA(APlayerCharacter::StaticClass()))
+        {
+            // Handle player interaction with the object
+            // Example: Apply damage, trigger event, etc.
+            HandlePlayerCollision(Other);
+        }
+        
+        // Optional: Reset the flag after a short delay to prevent multiple reactions
+        // This can be done using a timer or simple flag manipulation
+        bCanReactToCollision = false;
+
+        // Example cooldown (5 seconds cooldown, customizable)
+        GetWorld()>GetTimerManager().SetTimer(CollisionCooldownTimerHandle, this, &APhysicalObject::ResetCollisionFlag, 5.f, false);
+    }
+}
+
+void APhysicalObject::ResetCollisionFlag()
+{
+    // Enable collision reactions again after cooldown
+    bCanReactToCollision = true;
+}
+
+void APhysicalObject::HandlePlayerCollision(AActor* OtherActor)
+{
+    // Implement logic for when the object collides with the player
+    // This could be damaging the player, triggering a sound effect, etc.
+
+    if (OtherActor)
+    {
+        // Example: Trigger a specific response, like damage
+
+        APlayerCharacter* Player = Cast<APlayerCharacter>(OtherActor);
+        if (Player)
+        {
+            // Damage logic or other interaction logic
+            Player->ApplyDamage(10);
+        }
+    }
+}

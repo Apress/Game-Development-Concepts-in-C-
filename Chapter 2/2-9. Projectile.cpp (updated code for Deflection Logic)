@@ -1,0 +1,23 @@
+void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
+{
+    FVector ImpactNormal = Hit.Normal;
+    FVector IncomingVelocity = ProjectileMovement->Velocity;
+
+    // Check if the surface is penetrable
+    bool bIsPenetrable = OtherComponent->ComponentHasTag("Penetrable");
+
+    if (bIsPenetrable)
+    {
+        // Reduce velocity and allow penetration through the surface
+        ProjectileMovement->Velocity = IncomingVelocity * 0.5f; // Example penetration speed reduction
+    }
+    else
+    {
+        // Calculate deflection direction
+        FVector DeflectionDirection = FMath::GetReflectionVector(IncomingVelocity, ImpactNormal);
+
+        // Apply surface properties (e.g., elasticity)
+        float SurfaceElasticity = 0.8f; // Example elasticity value
+        ProjectileMovement->Velocity = DeflectionDirection * ProjectileMovement->InitialSpeed * SurfaceElasticity;
+    }
+}

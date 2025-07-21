@@ -1,0 +1,7 @@
+void AHitDetection::ProcessHit(AActor* HitActor)
+{
+    if (HitActor)
+    {
+        // Implement logic for applying damage or effects to the hit actor
+    }
+}

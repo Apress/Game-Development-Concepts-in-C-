@@ -1,0 +1,17 @@
+void APlayerCharacter::JumpAction()
+{
+    if (CanJump())
+    {
+        if (GetCharacterMovement()->IsFalling())
+        {
+            // Implement double jump logic here
+            LaunchCharacter(FVector(0, 0, GetCharacterMovement()->JumpZVelocity), false, true);
+	bCanDoubleJump = false; // Disable double jump after it has been used
+        }
+        else
+        {
+            bPressedJump = true;
+	    bCanDoubleJump = true; // Allow double jump after landing on the ground
+        }
+    }
+}

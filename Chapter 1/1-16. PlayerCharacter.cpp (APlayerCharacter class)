@@ -1,0 +1,43 @@
+#include "PlayerCharacter.h"
+#include "InteractiveObject.h"
+#include "GameFramework/PlayerController.h"
+#include "Components/InputComponent.h"
+
+APlayerCharacter::APlayerCharacter()
+{
+    PrimaryActorTick.bCanEverTick = true;
+}
+
+void APlayerCharacter::BeginPlay()
+{
+    Super::BeginPlay();
+
+    InputComponent->BindAction("Interact", IE_Pressed, this, &APlayerCharacter::OnInteract);
+}
+
+void APlayerCharacter::Tick(float DeltaTime)
+{
+    Super::Tick(DeltaTime);
+
+    CheckForInteractableObjects();
+}
+
+void APlayerCharacter::OnInteract()
+{
+    // Implement interaction logic here
+}
+
+void APlayerCharacter::CheckForInteractableObjects()
+{
+    // Implement logic to check for nearby interactive objects
+}
+
+void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) 
+
+{ 
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+ 
+	// Bind the "Interact" action to the OnInteract method 
+
+	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &APlayerCharacter::OnInteract); 
+}

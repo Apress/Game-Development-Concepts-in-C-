@@ -1,0 +1,37 @@
+float UDamageCalculation::CalculateDamage(const FCharacterStats& AttackerStats, const FCharacterStats& TargetStats, EHitBoneType HitBone)
+{
+    // Base damage calculation
+    float BaseDamage = AttackerStats.AttackPower - TargetStats.Defense;
+    if (BaseDamage < 0)
+    {
+        BaseDamage = 0;
+    }
+
+    // Critical hit multiplier based on hit bone
+    float CriticalMultiplier = 1.0f;
+
+    switch (HitBone)
+    {
+        case EHitBoneType::Head:
+            CriticalMultiplier = 2.5f; // Headshots deal 2.5x damage
+            break;
+        case EHitBoneType::Chest:
+            CriticalMultiplier = 1.5f; // Chest hits deal 1.5x damage
+            break;
+        case EHitBoneType::Limb:
+            CriticalMultiplier = 0.75f; // Limb shots deal 75% damage
+            break;
+        default:
+            CriticalMultiplier = 1.0f; // Normal damage for other areas
+            break;
+    }
+
+    // Apply the multiplier
+    BaseDamage *= CriticalMultiplier;
+
+    // Apply random variance (optional)
+    float DamageVariance = FMath::RandRange(0.9f, 1.1f);
+    float FinalDamage = BaseDamage * DamageVariance;
+
+    return FinalDamage;
+}

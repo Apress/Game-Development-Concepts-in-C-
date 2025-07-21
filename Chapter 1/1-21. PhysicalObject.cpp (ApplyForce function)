@@ -1,0 +1,15 @@
+void APhysicalObject::ApplyForce(FVector Force)
+{
+    // Ensure that physics simulation is enabled
+    if (ObjectMesh && ObjectMesh->IsSimulatingPhysics())
+    {
+        // Optionally, adjust force based on direction (forward, normal, etc.)
+        // Example of applying force based on forward vector:
+
+        FVector ForceDirection = ObjectMesh->GetForwardVector();
+
+       // Apply force in the chosen direction, you can scale it as needed
+
+        ObjectMesh->AddForce(ForceDirection * Force.Size()); // Apply scaled force in the direction of the forward vector
+    }
+}

@@ -1,0 +1,31 @@
+#include "WeatherEffect.h"
+#include "Particles/ParticleSystemComponent.h"
+#include "UObject/ConstructorHelpers.h"
+
+AWeatherEffect::AWeatherEffect()
+{
+    PrimaryActorTick.bCanEverTick = true;
+
+    // Create a default subobject for the weather particle system
+    WeatherParticleSystem = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("WeatherParticleSystem"));
+    RootComponent = WeatherParticleSystem;
+
+    // Binding a static particle system asset (hinted for static mesh binding)
+
+    static ConstructorHelpers::FObjectFinder<UParticleSystem> ParticleAsset(TEXT("ParticleSystem'/Game/Myfiles/P_Explosion.P_Explosion'"));
+    if (ParticleAsset.Succeeded())
+    {
+        WeatherParticleSystem->SetTemplate(ParticleAsset.Object);  // setting the particle asset to the component
+    }
+
+}
+
+void AWeatherEffect::BeginPlay()
+{
+    Super::BeginPlay();
+}
+
+void AWeatherEffect::Tick(float DeltaTime)
+{
+    Super::Tick(DeltaTime);
+}

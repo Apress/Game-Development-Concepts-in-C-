@@ -1,0 +1,23 @@
+void AHitDetection::PerformRaycast()
+{
+    FVector Start = GetActorLocation();
+    FVector ForwardVector = GetActorForwardVector();
+    FVector End = ((ForwardVector * 1000.0f) + Start);
+    FHitResult HitResult;
+
+    FCollisionQueryParams CollisionParams;
+    CollisionParams.AddIgnoredActor(this);
+
+    // Use a custom collision channel for more precise hit detection
+	// Replace ECC_MyCustomChannel with your actual custom collision channel
+	GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECC_MyCustomChannel, CollisionParams);
+
+if (HitResult.bBlockingHit)
+{
+    // Process the hit - Implement your logic for interaction with the object
+}
+    if (HitResult.bBlockingHit)
+    {
+        // Implement logic for processing the raycast hit
+    }
+}

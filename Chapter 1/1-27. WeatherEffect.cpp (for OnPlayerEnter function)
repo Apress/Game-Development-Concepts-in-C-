@@ -1,0 +1,5 @@
+void AWeatherEffect::OnPlayerEnter(AActor* PlayerActor)
+{
+    // Implement logic for interacting with the player
+    ApplyWeatherEffect("Rain");
+}

@@ -1,0 +1,21 @@
+void AWeatherEffect::ApplyWeatherEffect(FString EffectType)
+{
+    if (EffectType == "Rain")
+    {
+        // Assigning the rain particle system to the WeatherParticleSystem component
+        static ConstructorHelpers::FObjectFinder<UParticleSystem> RainParticleAsset(TEXT("ParticleSystem'/Game/Myfiles/P_Rain.P_Rain'"));
+        if (RainParticleAsset.Succeeded())
+        {
+            WeatherParticleSystem->SetTemplate(RainParticleAsset.Object);
+        }
+    }
+    else if (EffectType == "Snow")
+    {
+        // Assigning the snow particle system to the WeatherParticleSystem component
+        static ConstructorHelpers::FObjectFinder<UParticleSystem> SnowParticleAsset(TEXT("ParticleSystem'/Game/Myfiles/P_Snow.P_Snow'"));
+        if (SnowParticleAsset.Succeeded())
+        {
+            WeatherParticleSystem->SetTemplate(SnowParticleAsset.Object);
+        }
+    }
+}

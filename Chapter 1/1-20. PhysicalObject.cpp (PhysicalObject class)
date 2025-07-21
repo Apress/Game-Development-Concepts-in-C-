@@ -1,0 +1,27 @@
+#include "PhysicalObject.h"
+#include "Components/StaticMeshComponent.h"
+#include "PhysicsEngine/PhysicsConstraintComponent.h"
+
+APhysicalObject::APhysicalObject()
+{
+    PrimaryActorTick.bCanEverTick = true;
+
+    ObjectMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ObjectMesh"));
+    RootComponent = ObjectMesh;
+
+    PhysicsConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(TEXT("PhysicsConstraint"));
+    PhysicsConstraint->SetupAttachment(RootComponent);
+
+    ObjectMesh->SetSimulatePhysics(true);
+    ObjectMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+}
+
+void APhysicalObject::BeginPlay()
+{
+    Super::BeginPlay();
+}
+
+void APhysicalObject::Tick(float DeltaTime)
+{
+    Super::Tick(DeltaTime);
+}

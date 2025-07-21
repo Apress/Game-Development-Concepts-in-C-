@@ -1,0 +1,9 @@
+void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
+{
+    FVector ImpactNormal = Hit.Normal;
+    FVector IncomingVelocity = ProjectileMovement->Velocity;
+
+    // Calculate deflection direction
+    FVector DeflectionDirection = FMath::GetReflectionVector(IncomingVelocity, ImpactNormal);
+    ProjectileMovement->Velocity = DeflectionDirection * ProjectileMovement->InitialSpeed;
+}
